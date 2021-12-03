@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head lang="en">
+  <head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Snake Game</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-    <div id="gameContainer"></div>
+    <div id="container"></div>
     <div id="scoreContainer">
-      <div class="scoreBoard">Food: <span id="pointsEarned">0</span></div>
-      <div class="scoreBoard">Blocks: <span id="blocksTravelled">0</span></div>
+      <div class="scoreBoard">Score: <span id="pointsEarned">0</span></div>
     </div>
     <div id="onScreenControllers">
-      <button id="leftButton">◀️</button>
-      <div>
-        <button id="upButton">🔼</button>
-        <button id="downButton">🔽</button>
-      </div>
-      <button id="rightButton">▶️</button>
+      <button id="leftButton" onclick="changeDirection(LEFT_DIR)">◀️</button>
+      <button id="upButton" onclick="changeDirection(UP_DIR)">🔼</button>
+      <button id="downButton" onclick="changeDirection(DOWN_DIR)">🔽</button>
+      <button id="rightButton" onclick="changeDirection(RIGHT_DIR)">▶️</button>
     </div>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
