@@ -16,8 +16,7 @@ const gameBoardPixels = document.getElementsByClassName("gameBoardPixel");
 let currentFoodPostion = 0;
 const createFood = () => {
   gameBoardPixels[currentFoodPostion].classList.remove("food");
-  currentFoodPostion = Math.random();
-  currentFoodPostion = Math.floor(currentFoodPostion * SQUARE_OF_GAME_PIXEL_COUNT);
+  currentFoodPostion = Math.floor(Math.random() * SQUARE_OF_GAME_PIXEL_COUNT);
   gameBoardPixels[currentFoodPostion].classList.add("food");
 };
 
