@@ -1,12 +1,12 @@
-const GAME_PIXEL_COUNT = 40;
-const SQUARE_OF_GAME_PIXEL_COUNT = Math.pow(GAME_PIXEL_COUNT, 2);
+const GAME_PIXEL_LENGTH = 40;
+const TOTAL_GAME_PIXELS = Math.pow(GAME_PIXEL_LENGTH, 2);
 
 let totalFoodAte = 0;
 
 const container = document.getElementById("container");
 
 const createGameBoardPixels = () => {
-  for (let i = 1; i <= SQUARE_OF_GAME_PIXEL_COUNT; ++i) {
+  for (let i = 1; i <= TOTAL_GAME_PIXELS; ++i) {
     container.innerHTML = `${container.innerHTML} <div class="gameBoardPixel" id="pixel${i}"></div>`;
   }
 };
@@ -16,7 +16,7 @@ const gameBoardPixels = document.getElementsByClassName("gameBoardPixel");
 let currentFoodPostion = 0;
 const createFood = () => {
   gameBoardPixels[currentFoodPostion].classList.remove("food");
-  currentFoodPostion = Math.floor(Math.random() * SQUARE_OF_GAME_PIXEL_COUNT);
+  currentFoodPostion = Math.floor(Math.random() * TOTAL_GAME_PIXELS);
   gameBoardPixels[currentFoodPostion].classList.add("food");
 };
 
@@ -27,64 +27,64 @@ const DOWN_DIR = 40;
 
 let snakeCurrentDirection = RIGHT_DIR;
 
-const changeDirection = newDirectionCode => {
-  if (newDirectionCode == snakeCurrentDirection) return;
+const changeDirection = newDirection => {
+  if (newDirection == snakeCurrentDirection) return;
 
-  if (newDirectionCode == LEFT_DIR && snakeCurrentDirection != RIGHT_DIR) {
-    snakeCurrentDirection = newDirectionCode;
-  } else if (newDirectionCode == UP_DIR && snakeCurrentDirection != DOWN_DIR) {
-    snakeCurrentDirection = newDirectionCode;
-  } else if (
-    newDirectionCode == RIGHT_DIR &&
-    snakeCurrentDirection != LEFT_DIR
-  ) {
-    snakeCurrentDirection = newDirectionCode;
-  } else if (newDirectionCode == DOWN_DIR && snakeCurrentDirection != UP_DIR) {
-    snakeCurrentDirection = newDirectionCode;
+  if (newDirection == LEFT_DIR && snakeCurrentDirection != RIGHT_DIR) {
+    snakeCurrentDirection = newDirection;
+  } else if (newDirection == UP_DIR && snakeCurrentDirection != DOWN_DIR) {
+    snakeCurrentDirection = newDirection;
+  } else if (newDirection == RIGHT_DIR && snakeCurrentDirection != LEFT_DIR) {
+    snakeCurrentDirection = newDirection;
+  } else if (newDirection == DOWN_DIR && snakeCurrentDirection != UP_DIR) {
+    snakeCurrentDirection = newDirection;
   }
 };
 
-let currentSnakeHeadPosition = SQUARE_OF_GAME_PIXEL_COUNT / 2;
+let currentSnakeHeadPosition = TOTAL_GAME_PIXELS / 2;
 
 let snakeLength = 500;
 
 const moveSnake = () => {
   switch (snakeCurrentDirection) {
     case LEFT_DIR:
-      --currentSnakeHeadPosition;
-      const isSnakeHeadAtLastGameBoardPixelTowardsLeft =
-        currentSnakeHeadPosition % GAME_PIXEL_COUNT == GAME_PIXEL_COUNT - 1 ||
-        currentSnakeHeadPosition < 0;
-      if (isSnakeHeadAtLastGameBoardPixelTowardsLeft) {
-        currentSnakeHeadPosition = currentSnakeHeadPosition + GAME_PIXEL_COUNT;
+      {
+        --currentSnakeHeadPosition;
+        const isLastPixel = currentSnakeHeadPosition % GAME_PIXEL_LENGTH == GAME_PIXEL_LENGTH - 1 || currentSnakeHeadPosition < 0;
+        if (isLastPixel) {
+          currentSnakeHeadPosition = currentSnakeHeadPosition + GAME_PIXEL_LENGTH;
+        }
+        break;
       }
-      break;
     case UP_DIR:
-      currentSnakeHeadPosition = currentSnakeHeadPosition - GAME_PIXEL_COUNT;
-      const isSnakeHeadAtLastGameBoardPixelTowardsUp =
-        currentSnakeHeadPosition < 0;
-      if (isSnakeHeadAtLastGameBoardPixelTowardsUp) {
-        currentSnakeHeadPosition =
-          currentSnakeHeadPosition + SQUARE_OF_GAME_PIXEL_COUNT;
+      {
+        currentSnakeHeadPosition = currentSnakeHeadPosition - GAME_PIXEL_LENGTH;
+        const isLastPixel = currentSnakeHeadPosition < 0;
+        if (isLastPixel) {
+          currentSnakeHeadPosition =
+            currentSnakeHeadPosition + TOTAL_GAME_PIXELS;
+        }
+        break;
       }
-      break;
     case RIGHT_DIR:
-      ++currentSnakeHeadPosition;
-      const isSnakeHeadAtLastGameBoardPixelTowardsRight =
-        currentSnakeHeadPosition % GAME_PIXEL_COUNT == 0;
-      if (isSnakeHeadAtLastGameBoardPixelTowardsRight) {
-        currentSnakeHeadPosition = currentSnakeHeadPosition - GAME_PIXEL_COUNT;
+      {
+        ++currentSnakeHeadPosition;
+        const isLastPixel = currentSnakeHeadPosition % GAME_PIXEL_LENGTH == 0;
+        if (isLastPixel) {
+          currentSnakeHeadPosition = currentSnakeHeadPosition - GAME_PIXEL_LENGTH;
+        }
+        break;
       }
-      break;
     case DOWN_DIR:
-      currentSnakeHeadPosition = currentSnakeHeadPosition + GAME_PIXEL_COUNT;
-      const isSnakeHeadAtLastGameBoardPixelTowardsDown =
-        currentSnakeHeadPosition > SQUARE_OF_GAME_PIXEL_COUNT - 1;
-      if (isSnakeHeadAtLastGameBoardPixelTowardsDown) {
-        currentSnakeHeadPosition =
-          currentSnakeHeadPosition - SQUARE_OF_GAME_PIXEL_COUNT;
+      {
+        currentSnakeHeadPosition = currentSnakeHeadPosition + GAME_PIXEL_LENGTH;
+        const isLastPixel = currentSnakeHeadPosition > TOTAL_GAME_PIXELS - 1;
+        if (isLastPixel) {
+          currentSnakeHeadPosition =
+            currentSnakeHeadPosition - TOTAL_GAME_PIXELS;
+        }
+        break;
       }
-      break;
     default:
       break;
   }
@@ -121,4 +121,3 @@ createFood();
 var moveSnakeInterval = setInterval(moveSnake, 80);
 
 addEventListener("keydown", e => changeDirection(e.keyCode));
-
